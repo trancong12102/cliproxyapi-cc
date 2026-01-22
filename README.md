@@ -11,6 +11,9 @@ cp .env.example .env
 
 # Start services
 docker compose up -d
+
+# Login with Antigravity
+docker compose exec cliproxyapi /CLIProxyAPI/CLIProxyAPI -no-browser --antigravity-login
 ```
 
 ## Ports
