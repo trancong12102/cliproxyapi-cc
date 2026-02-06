@@ -9,7 +9,7 @@ auth-dir: "/root/.cli-proxy-api"
 request-retry: 3
 max-retry-interval: 30
 api-keys:
-  - "sk-cliproxyapi-xxx"
+  - "xxx"
 request-log: false
 logging-to-file: false
 usage-statistics-enabled: true

@@ -1,47 +1,45 @@
-# CLI Proxy API with Envoy
+# CLI Proxy API
 
-API proxy using CLI Proxy API and Envoy for request routing and model aliasing.
+CLI Proxy API is a proxy server designed to manage and route API requests, particularly for large-scale AI model providers. It features remote management, usage statistics, and model aliasing.
 
-## Quick Start
+## Features
 
-```bash
-# Configure environment
-cp .env.example .env
-# Edit .env with your ANTHROPIC_API_KEY
+- **Model Aliasing**: Maps custom model names to specific provider model versions (e.g., Antigravity models to Gemini/Claude).
+- **Remote Management**: Optional remote control panel integration.
+- **Quota Management**: Automatic project switching on quota exhaustion.
+- **Docker Support**: Easy deployment using Docker Compose with automatic updates via Watchtower.
 
-# Start services
-docker compose up -d
+## Prerequisites
 
-# Login with Antigravity
-docker compose exec cliproxyapi /CLIProxyAPI/CLIProxyAPI -no-browser --antigravity-login
-```
-
-## Ports
-
-| Port | Service                          |
-|------|----------------------------------|
-| 8318 | Envoy (main API endpoint)        |
-| 8317 | CLI Proxy API (direct access)    |
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
 
 ## Configuration
 
-- **`.env`** - Set `ANTHROPIC_API_KEY` for token counting
-- **`config.yaml`** - API keys, model aliases, routing strategy
-- **`envoy.yaml`** - Proxy routing rules
+The application is configured via `config.yaml`. Key settings include:
 
-## Routing
+- `port`: The main server port (default: 8317).
+- `api-keys`: Authorized API keys for accessing the proxy.
+- `oauth-model-alias`: Custom mappings for various AI models.
+- `routing`: Strategy for request distribution (e.g., `fill-first`).
 
-- `/v1/messages/count_tokens` → Anthropic API (direct)
-- All other requests → CLI Proxy API
+## Deployment
 
-## Auto-Update
-
-Watchtower automatically updates labeled containers every 5 minutes.
-
-## Commands
+To start the service using Docker Compose:
 
 ```bash
-docker compose logs -f      # View logs
-docker compose restart      # Restart services
-docker compose down && docker compose up -d  # Reset
+docker-compose up -d
 ```
+
+This will launch two services:
+
+1. `cliproxyapi`: The core proxy service.
+2. `watchtower`: Automatically updates the container image when new versions are released.
+
+## Usage
+
+Once running, the API will be available on the ports defined in `docker-compose.yml`. Use your configured API keys to authenticate requests.
+
+## License
+
+Refer to the project repository for licensing information.

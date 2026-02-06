@@ -1,21 +1,4 @@
 services:
-  envoy:
-    container_name: envoy
-    image: envoyproxy/envoy:v1.36-latest
-    pull_policy: always
-    restart: unless-stopped
-    ports:
-      - "8318:8318"
-    environment:
-      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
-    volumes:
-      - ./envoy.yaml:/etc/envoy/envoy.yaml:ro
-    depends_on:
-      - cliproxyapi
-    command: ["-c", "/etc/envoy/envoy.yaml", "--log-level", "info"]
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
-
   cliproxyapi:
     container_name: cliproxyapi
     pull_policy: always
